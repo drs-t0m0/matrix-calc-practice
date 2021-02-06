@@ -1,6 +1,3 @@
-// 行列を作るfor文を書く
-// 乱数で初期化
-
 //{{1, 2},
 //{3, 4}}
 //----------
@@ -43,14 +40,15 @@
 //426   484   542   600
 
 #include <stdio.h>
+#include <time.h>
 
-void createMatrix(int *matrix, int N) {
+void CreateMatrix(int *matrix, int N) {
     for (int i = 0; i < N * N; i++) {
         matrix[i] = i + 1;
     }
 }
 
-void calcMatrix(int *matrix1, int *matrix2, int N) {
+void CalculateMatrix(int *matrix1, int *matrix2, int N) {
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             int sum = 0;
@@ -68,10 +66,10 @@ int main() {
     int matrix1[N * N];
     int matrix2[N * N];
 
-    createMatrix(matrix1, N);
-    createMatrix(matrix2, N);
+    CreateMatrix(matrix1, N);
+    CreateMatrix(matrix2, N);
 
-    calcMatrix(matrix1, matrix2, N);
+    CalculateMatrix(matrix1, matrix2, N);
 
     return 0;
 }
