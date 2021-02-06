@@ -1,47 +1,77 @@
 // 行列を作るfor文を書く
 // 乱数で初期化
 
+//{{1, 2},
+//{3, 4}}
+//----------
+//7    10
+//15    22
+//----------
+//{1, 2, 3, 4}
+//a1 = m[0] * m[0] + m[1] * m[2]
+//a2 = m[0] * m[1] + m[1] * m[3]
+//a3 = m[2] * m[0] + m[3] * m[2]
+//a4 = m[2] * m[1] + m[3] * m[3]
+
+//{{1, 2, 3},
+//{4, 5, 6},
+//{7, 8, 9}}
+//----------
+//{1, 2, 3, 4, 5, 6, 7, 8, 9}
+//a1 = m[0] * m[0] + m[1] * m[3] + m[2] * m[6]
+//a2 = m[0] * m[1] + m[1] * m[4] + m[2] * m[7]
+//a3 = m[0] * m[2] + m[1] * m[5] + m[2] * m[8]
+//a4 = m[3] * m[0] + m[4] * m[3] + m[5] * m[6]
+//a5 = m[3] * m[1] + m[4] * m[4] + m[5] * m[7]
+//a6 = m[3] * m[2] + m[4] * m[5] + m[5] * m[8]
+//a7 = m[6] * m[0] + m[7] * m[3] + m[8] * m[6]
+//a8 = m[6] * m[1] + m[7] * m[4] + m[8] * m[7]
+//a9 = m[6] * m[2] + m[7] * m[5] + m[8] * m[8]
+
+//30    36    42
+//66    81    96
+//102   126   150
+
+//{{1, 2, 3, 4},
+//{5, 6, 7, 8},
+//{9, 10, 11, 12},
+//{13, 14, 15, 16}}
+//----------
+//90   100   110   120
+//202   228   254   280
+//314   356   398   440
+//426   484   542   600
 
 #include <stdio.h>
 
-// 関数作成create matrix
-void createMatrix(int * matrix, int N) {
-    printf("%p\n", matrix);
-    for (int i = 0; i < N * N; i++)
-    {
-        printf("%p\n", &matrix[i]);
-        matrix[i] = i;
+void createMatrix(int *matrix, int N) {
+    for (int i = 0; i < N * N; i++) {
+        matrix[i] = i + 1;
+    }
+}
+
+void calcMatrix(int *matrix1, int *matrix2, int N) {
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            int sum = 0;
+            for (int k = 0; k < N; ++k) {
+                sum += matrix1[i * N + k] * matrix2[k * N + j];
+            }
+            printf("%d ", sum);
+        }
+        printf("\n");
     }
 }
 
 int main() {
-    int N = 3;
+    int N = 4;
     int matrix1[N * N];
-
-    printf("%p\n", matrix1);
+    int matrix2[N * N];
 
     createMatrix(matrix1, N);
-    for (int i = 0; i < N * N; i++)
-    {
-        printf("%d\n", matrix1[i]);
-    }
-    
+    createMatrix(matrix2, N);
 
-    // int matrix2[N][N] = {{1, 2, 3},
-    //                      {4, 5, 6},
-    //                      {7, 8, 9}};
+    calcMatrix(matrix1, matrix2, N);
 
-    // int result[N][N];
-    // for (int i = 0; i < N; ++i) {
-    //     for (int j = 0; j < N; ++j) {
-    //         result[i][j] = 0;
-    //         for (int k = 0; k < N; ++k) {
-    //             result[i][j] += matrix1[i][k] * matrix2[k][j];
-    //         }
-    //         printf("%5d ", result[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-    
     return 0;
 }
