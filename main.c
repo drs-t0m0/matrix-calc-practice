@@ -17,50 +17,53 @@ void CalculateMatrix(int *matrix1, int *matrix2, int *matrix3, int N) {
                 sum += matrix1[i * N + k] * matrix2[k * N + j];
             }
             matrix3[i * N + j] = sum;
-//            printf("%d * %d + %d = %d\n", i, N, j, sum);
         }
-//        printf("\n");
     }
 }
 
-void MeasureTime(void (*pf)(int *, int *, int *, int), int *matrix1, int *matrix2, int *matrix3, int N) {
+void MeasureCreateTime(void (*pf)(int *, int), int *matrix1, int *matrix2, int *matrix3, int N) {
     struct timeval stv, etv;
     gettimeofday(&stv, NULL);
-//    printf("%ld %06lu\n", stv.tv_sec, stv.tv_usec);
 
+    printf("create time\n");
+    pf(matrix1, N);
+    pf(matrix2, N);
+    pf(matrix3, N);
+
+    gettimeofday(&etv, NULL);
+
+    printf("%ld.%06lu\n", etv.tv_sec - stv.tv_sec, etv.tv_usec - stv.tv_usec);
+}
+
+void MeasureCalculateTime(void (*pf)(int *, int *, int *, int), int *matrix1, int *matrix2, int *matrix3, int N) {
+    struct timeval stv, etv;
+    gettimeofday(&stv, NULL);
+
+    printf("calculate time\n");
     pf(matrix1, matrix2, matrix3, N);
 
     gettimeofday(&etv, NULL);
-//    printf("%ld %06lu\n", etv.tv_sec, etv.tv_usec);
 
-    printf("%ld %06lu\n", etv.tv_sec - stv.tv_sec, etv.tv_usec - stv.tv_usec);
-
-//    time_t start_time = gettimeofday(NULL);
-//    pf(matrix1, matrix2, matrix3, N);
-//    time_t end_time = time(NULL);
-//    printf("time:%ld\n", end_time - start_time);
+    printf("%ld.%06lu\n", etv.tv_sec - stv.tv_sec, etv.tv_usec - stv.tv_usec);
 }
 
-int main() {
-    int N = 1000;
+int main(int argc, char *argv[]) {
+    int N = atoi(argv[1]);
+    printf("----------\n");
+    printf("main start, args: %d\n", N);
+
+    struct timeval stv, etv;
+    gettimeofday(&stv, NULL);
     int *matrix1 = (int *) malloc(N * N * sizeof(int));
     int *matrix2 = (int *) malloc(N * N * sizeof(int));
     int *matrix3 = (int *) malloc(N * N * sizeof(int));
-//    int matrix1[N * N];
-//    int matrix2[N * N];
-//    int matrix3[N * N];
+    gettimeofday(&etv, NULL);
+    printf("malloc time\n");
+    printf("%ld.%06lu\n", etv.tv_sec - stv.tv_sec, etv.tv_usec - stv.tv_usec);
 
-    CreateMatrix(matrix1, N);
-    CreateMatrix(matrix2, N);
-    CreateMatrix(matrix3, N);
+    MeasureCreateTime(CreateMatrix, matrix1, matrix2, matrix3, N);
+    MeasureCalculateTime(CalculateMatrix, matrix1, matrix2, matrix3, N);
 
-//    CalculateMatrix(matrix1, matrix2, matrix3, N);
-
-//    for (int i = 0; i < N * N; ++i) {
-//        printf("%d\n", matrix3[i]);
-//    }
-
-    MeasureTime(CalculateMatrix, matrix1, matrix2, matrix3, N);
-
+    printf("main end\n");
     return 0;
 }
