@@ -33,8 +33,6 @@
 
 # IDE
 .idea
-cmake-build-debug
-CMakeLists.txt
 
 # MEMO
 memo.md

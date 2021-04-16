@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/okadatomohiro/project/github.com/drs-t0m0/matrix-calc-practice/main.c
+stdlib.h
+-
+stdio.h
+-
+time.h
+-
+sys/time.h
+-
+omp.h
+-
+
