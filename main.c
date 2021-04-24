@@ -12,11 +12,15 @@ void createMatrix(double *matrix, int N) {
 }
 
 void calculateMatrix(double *matrix1, double *matrix2, double *matrix3, int N) {
-#pragma omp parallel for
-    for (int j = 0; j < N; ++j) {
-        for (int i = 0; i < N; ++i) {
+//    printf("threads = %d\n", omp_get_max_threads());
+    int i, j, k;
+//#pragma omp parallel for
+#pragma omp parallel for reduction(+:j, k)
+    for (i = 0; i < N; ++i) {
+        for (j = 0; j < N; ++j) {
             double sum = 0;
-            for (int k = 0; k < N; ++k) {
+            for (k = 0; k < N; ++k) {
+                printf("i = %d, j = %d, k = %d, thread = %d\n", i, j, k, omp_get_thread_num());
                 sum += matrix1[i * N + k] * matrix2[k * N + j];
             }
             matrix3[i * N + j] = sum;

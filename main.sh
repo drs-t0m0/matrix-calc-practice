@@ -15,4 +15,5 @@
 #./main 1000
 
 #gcc main.c -O3 -march=native -mavx2 -o main && ./main 1000
-gcc main.c -O3 -o main && ./main 3
+#gcc main.c -O3 -o main && ./main 3
+gcc main.c -O3 -fopenmp -o main && ./main 3
